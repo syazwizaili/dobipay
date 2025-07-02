@@ -1,21 +1,20 @@
-import React, { useContext } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { usePathname } from "next/navigation";
+import React, {useContext} from "react";
+import {useTheme} from "@mui/material/styles";
+import {usePathname} from "next/navigation";
 
 // mui imports
-import Box from '@mui/material/Box';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { styled } from '@mui/material/styles';
+import Box from "@mui/material/Box";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import {styled} from "@mui/material/styles";
 
-import { CustomizerContext } from "@/app/context/customizerContext";
+import {CustomizerContext} from "@/app/context/customizerContext";
 // custom imports
-import NavItem from '../NavItem/NavItem';
+import NavItem from "../NavItem/NavItem";
 
 // plugins
-import { IconChevronDown } from '@tabler/icons-react';
-
+import {IconChevronDown} from "@tabler/icons-react";
 
 type NavGroupProps = {
   [x: string]: any;
@@ -36,16 +35,25 @@ interface NavCollapseProps {
 }
 
 // FC Component For Dropdown Menu
-const NavCollapse = ({ menu, level, pathWithoutLastPart, pathDirect, hideMenu }: NavCollapseProps) => {
+const NavCollapse = ({
+  menu,
+  level,
+  pathWithoutLastPart,
+  pathDirect,
+  hideMenu,
+}: NavCollapseProps) => {
   const Icon = menu.icon;
   const theme = useTheme();
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
-  const { isBorderRadius } = useContext(CustomizerContext);
-
+  const {isBorderRadius} = useContext(CustomizerContext);
 
   const menuIcon =
-    level > 1 ? <Icon stroke={1.5} size="1rem" /> : <Icon stroke={1.5} size="1.1rem" />;
+    level > 1 ? (
+      <Icon stroke={1.5} size="1rem" />
+    ) : (
+      <Icon stroke={1.5} size="1.1rem" />
+    );
 
   React.useEffect(() => {
     setOpen(false);
@@ -57,32 +65,36 @@ const NavCollapse = ({ menu, level, pathWithoutLastPart, pathDirect, hideMenu }:
   }, [pathname, menu.children]);
 
   const ListItemStyled = styled(ListItemButton)(() => ({
-    width: 'auto',
-    padding: '5px 10px',
-    position: 'relative',
-    flexGrow: 'unset',
-    gap: '10px',
+    width: "auto",
+    padding: "5px 10px",
+    position: "relative",
+    flexGrow: "unset",
+    gap: "10px",
     borderRadius: `${isBorderRadius}px`,
-    whiteSpace: 'nowrap',
-    color: open || pathname.includes(menu.href) || level < 1 ? 'white' : theme.palette.text.secondary,
-    backgroundColor: open || pathname.includes(menu.href) ? theme.palette.primary.main : '',
+    whiteSpace: "nowrap",
+    color:
+      open || pathname?.includes(menu.href) || level < 1
+        ? "white"
+        : theme.palette.text.secondary,
+    backgroundColor:
+      open || pathname?.includes(menu.href) ? theme.palette.primary.main : "",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor:
-        open || pathname.includes(menu.href)
+        open || pathname?.includes(menu.href)
           ? theme.palette.primary.main
           : theme.palette.primary.light,
     },
-    '&:hover > .SubNav': { display: 'block' },
+    "&:hover > .SubNav": {display: "block"},
   }));
 
   const ListSubMenu = styled((props: any) => <Box {...props} />)(() => ({
-    display: 'none',
-    position: 'absolute',
-    top: level > 1 ? `0px` : '35px',
-    left: level > 1 ? `${level + 228}px` : '0px',
-    padding: '10px',
-    width: '250px',
+    display: "none",
+    position: "absolute",
+    top: level > 1 ? `0px` : "35px",
+    left: level > 1 ? `${level + 228}px` : "0px",
+    padding: "10px",
+    width: "250px",
     color: theme.palette.text.primary,
     boxShadow: theme.shadows[8],
     backgroundColor: theme.palette.background.paper,
@@ -91,7 +103,7 @@ const NavCollapse = ({ menu, level, pathWithoutLastPart, pathDirect, hideMenu }:
   const listItemProps: {
     component: string;
   } = {
-    component: 'li',
+    component: "li",
   };
 
   // If Menu has Children
@@ -104,7 +116,9 @@ const NavCollapse = ({ menu, level, pathWithoutLastPart, pathDirect, hideMenu }:
           level={level + 1}
           pathWithoutLastPart={pathWithoutLastPart}
           pathDirect={pathDirect}
-          hideMenu={hideMenu} onClick={undefined} />
+          hideMenu={hideMenu}
+          onClick={undefined}
+        />
       );
     } else {
       return (
@@ -113,9 +127,11 @@ const NavCollapse = ({ menu, level, pathWithoutLastPart, pathDirect, hideMenu }:
           item={item}
           level={level + 1}
           pathDirect={pathDirect}
-          hideMenu={hideMenu} onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }} />
+          hideMenu={hideMenu}
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       );
     }
   });
@@ -125,18 +141,18 @@ const NavCollapse = ({ menu, level, pathWithoutLastPart, pathDirect, hideMenu }:
       <ListItemStyled
         {...listItemProps}
         selected={pathWithoutLastPart === menu.href}
-        className={open ? 'selected' : ''}
+        className={open ? "selected" : ""}
       >
         <ListItemIcon
           sx={{
-            minWidth: 'auto',
-            p: '3px 0',
-            color: 'inherit',
+            minWidth: "auto",
+            p: "3px 0",
+            color: "inherit",
           }}
         >
           {menuIcon}
         </ListItemIcon>
-        <ListItemText color="inherit" sx={{ mr: 'auto' }}>
+        <ListItemText color="inherit" sx={{mr: "auto"}}>
           {menu.title}
         </ListItemText>
         <IconChevronDown size="1rem" />
