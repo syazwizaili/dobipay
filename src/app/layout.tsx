@@ -3,7 +3,6 @@ import MyApp from "./app";
 import NextTopLoader from "nextjs-toploader";
 import "./global.css";
 import {CustomizerContextProvider} from "./context/customizerContext";
-import {SpeedInsights} from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "DobiPay",
@@ -23,7 +22,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <CustomizerContextProvider>
           <MyApp>{children}</MyApp>
         </CustomizerContextProvider>
-        <SpeedInsights />
       </body>
     </html>
   );
